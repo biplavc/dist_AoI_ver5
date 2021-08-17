@@ -1,0 +1,164 @@
+GPUs are []
+experiment is 1 with test_case = True, packet_loss = False, periodic_generation = False, RB_total_UL = 24, RB_total_DL = 24
+passed arguments are [('RP', 28, 'mad')]
+adj_matrix = 
+ [[0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1. 0.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 1.
+  0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0.
+  1. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.
+  0. 1. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  1. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 1. 0. 1.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+  0. 0. 1. 0.]]
+BS_location = [500.0, 500.0], user_locations = {10: [844.79, 337.4], 11: [387.93, 248.87], 12: [247.32, 280.0], 13: [944.58, 817.88], 14: [942.21, 840.46], 15: [7.21, 291.94], 16: [704.91, 311.76], 17: [765.21, 195.13], 18: [423.73, 288.2], 19: [451.37, 233.23], 20: [259.66, 797.39], 21: [81.08, 462.67], 22: [997.47, 518.87], 23: [648.0, 700.88], 24: [145.06, 673.78], 25: [66.44, 913.53], 26: [635.02, 441.15], 27: [183.7, 435.92], 28: [588.77, 634.43], 29: [198.71, 323.53], 30: [839.43, 708.16], 31: [277.48, 582.2], 32: [862.1, 122.15], 33: [934.58, 290.92], 34: [25.68, 357.08], 35: [82.61, 964.47], 36: [285.69, 675.21], 37: [327.12, 322.81]}, max distance = 497.4510336706519, min distance = 51.29957992030734
+MAD ep = 1 took 19.8 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:04.058980 
+MAD ep = 2 took 40.36 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:41.386540 
+MAD ep = 3 took 60.8 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:50.316237 
+MAD ep = 4 took 81.21 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:53.748591 
+MAD ep = 5 took 101.68 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:57.168815 
+MAD ep = 6 took 122.11 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:58.727170 
+MAD ep = 7 took 142.35 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:57.225343 
+MAD ep = 8 took 162.93 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:00.189312 
+MAD ep = 9 took 183.01 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:57.099364 
+MAD ep = 10 took 203.57 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:59.293561 
+MAD ep = 11 took 223.78 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:57.943130 
+MAD ep = 12 took 244.52 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:01.253537 
+MAD ep = 13 took 264.72 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:59.940001 
+MAD ep = 14 took 285.06 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:09:59.735290 
+MAD ep = 15 took 305.95 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.258162 
+MAD ep = 16 took 326.09 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:01.672318 
+MAD ep = 17 took 346.33 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:00.828964 
+MAD ep = 18 took 366.64 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:00.482523 
+MAD ep = 19 took 387.68 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.003024 
+MAD ep = 20 took 407.87 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.967183 
+MAD ep = 21 took 428.07 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.041584 
+MAD ep = 22 took 448.41 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:01.816702 
+MAD ep = 23 took 469.57 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.197550 
+MAD ep = 24 took 489.74 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.165635 
+MAD ep = 25 took 509.95 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.387728 
+MAD ep = 26 took 530.3 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.204143 
+MAD ep = 27 took 550.53 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.597375 
+MAD ep = 28 took 570.72 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:01.895282 
+MAD ep = 29 took 592.09 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.304177 
+MAD ep = 30 took 612.36 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.787124 
+MAD ep = 31 took 632.62 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.303251 
+MAD ep = 32 took 652.79 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.566286 
+MAD ep = 33 took 673.05 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.150691 
+MAD ep = 34 took 693.29 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.682088 
+MAD ep = 35 took 713.67 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.667476 
+MAD ep = 36 took 735.3 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.096206 
+MAD ep = 37 took 755.51 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.521596 
+MAD ep = 38 took 775.77 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.106260 
+MAD ep = 39 took 796.06 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.773731 
+MAD ep = 40 took 816.26 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.246241 
+MAD ep = 41 took 836.54 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.933841 
+MAD ep = 42 took 856.74 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.450033 
+MAD ep = 43 took 877.06 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.284115 
+MAD ep = 44 took 897.26 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.824632 
+MAD ep = 45 took 919.35 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.594094 
+MAD ep = 46 took 939.54 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.078397 
+MAD ep = 47 took 959.87 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.886857 
+MAD ep = 48 took 980.0 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.259225 
+MAD ep = 49 took 1000.24 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.913233 
+MAD ep = 50 took 1020.43 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.460859 
+MAD ep = 51 took 1040.77 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.335580 
+MAD ep = 52 took 1060.87 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.743088 
+MAD ep = 53 took 1081.06 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.332134 
+MAD ep = 54 took 1101.24 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.938998 
+MAD ep = 55 took 1121.51 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.718425 
+MAD ep = 56 took 1144.01 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.474153 
+MAD ep = 57 took 1164.27 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.170630 
+MAD ep = 58 took 1184.44 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.745731 
+MAD ep = 59 took 1204.75 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.542939 
+MAD ep = 60 took 1224.98 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.232704 
+MAD ep = 61 took 1245.19 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.889758 
+MAD ep = 62 took 1265.44 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.626277 
+MAD ep = 63 took 1285.69 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.382657 
+MAD ep = 64 took 1305.95 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.140116 
+MAD ep = 65 took 1326.06 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.695596 
+MAD ep = 66 took 1346.35 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.524339 
+MAD ep = 67 took 1366.56 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.237777 
+MAD ep = 68 took 1386.68 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.834279 
+MAD ep = 69 took 1409.82 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.819126 
+MAD ep = 70 took 1430.07 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.560550 
+MAD ep = 71 took 1450.31 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.289487 
+MAD ep = 72 took 1470.53 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.999097 
+MAD ep = 73 took 1490.7 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.652756 
+MAD ep = 74 took 1510.93 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.402325 
+MAD ep = 75 took 1531.18 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.167286 
+MAD ep = 76 took 1551.39 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.901585 
+MAD ep = 77 took 1571.57 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.598387 
+MAD ep = 78 took 1591.68 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.220214 
+MAD ep = 79 took 1611.86 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.923863 
+MAD ep = 80 took 1632.0 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.603404 
+MAD ep = 81 took 1652.16 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.299798 
+MAD ep = 82 took 1672.42 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.139131 
+MAD ep = 83 took 1692.61 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.895124 
+MAD ep = 84 took 1712.81 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.656318 
+MAD ep = 85 took 1732.99 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.416023 
+MAD ep = 86 took 1753.25 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:02.259676 
+MAD ep = 87 took 1777.09 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:06.236590 
+MAD ep = 88 took 1797.3 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.981542 
+MAD ep = 89 took 1817.47 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.700176 
+MAD ep = 90 took 1837.64 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.420169 
+MAD ep = 91 took 1857.88 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:05.222527 
+MAD ep = 92 took 1878.04 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.950931 
+MAD ep = 93 took 1898.33 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.812570 
+MAD ep = 94 took 1918.5 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.554815 
+MAD ep = 95 took 1938.64 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.273938 
+MAD ep = 96 took 1958.86 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:04.075736 
+MAD ep = 97 took 1979.09 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.899461 
+MAD ep = 98 took 1999.29 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.693245 
+MAD ep = 99 took 2019.47 seconds from start, rate = 0.05 eps/sec, finish_time = 2021-05-25 10:10:03.468371 
+
+MAD scheduling  RP  placement,  28  users, MAX_STEPS =  5000 , MEAN of overall_ep_reward =  487451.52  MIN and MAX of overall_ep_reward =  486996 ,  487768  ... MEAN of overall_ep_peak_reward =  16012.7  MIN and MAX of overall_ep_peak_reward =  15940 ,  16086 . Similarly for final_step_UAV_rewards - MEAN =  {4.0} , MIN and MAX of final_step_UAV_rewards =  4 ,  4  end with final state of  [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0]  with shape  (84,) , min PDR_upload =  {1.0} , max PDR_upload =  {1.0} , min PDR_download =  {1.0} , max PDR_upload =  {1.0} , max_total_packet_lost_upload =  0 , min_total_packet_lost_upload =  0 , max_total_packet_lost_download =  0 , min_total_packet_lost_download =  0
