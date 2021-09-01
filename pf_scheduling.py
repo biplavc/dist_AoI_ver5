@@ -25,7 +25,7 @@ def find_pf_action(eval_env, average_rate_source, average_rate_BS, BS_location, 
     individual_rate_source = {}
     
     for i in average_rate_source:
-        if getSNR(BS_location, user_locations[i], i) < eval_env.packet_upload_loss_thresh[i]:
+        if getSNR(BS_location, user_locations[i]) < eval_env.packet_upload_loss_thresh[i]:
             ##  received_SNR_upload = getSNR(BS_location, user_locations[i], i)
             individual_rate_source[i] = 0
         else:
@@ -67,7 +67,7 @@ def find_pf_action(eval_env, average_rate_source, average_rate_BS, BS_location, 
     individual_rate_BS = {}
     
     for i in average_rate_BS:
-        if getSNR(BS_location, user_locations[i[1]], i[1]) < eval_env.packet_download_loss_thresh[tuple(i)]:
+        if getSNR(BS_location, user_locations[i[1]]) < eval_env.packet_download_loss_thresh[tuple(i)]:
             ## received_SNR_download = getSNR(BS_location, user_locations[i[1]], i[1])
             individual_rate_BS[i] = 0
         else:
@@ -274,7 +274,7 @@ def pf_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_los
                 if verbose:
                     print(f"\ncurrent slot = {eval_env.current_step}, pair {i} age at the beginning is {eval_env.dest_age[tuple(i)]}")
                     
-                received_SNR_download = getSNR(BS_location, user_locations[i[1]], i[1])
+                received_SNR_download = getSNR(BS_location, user_locations[i[1]])
                 
                 if received_SNR_download < eval_env.packet_download_loss_thresh[tuple(i)]:
                     # print(f"PACKET LOSS - received_SNR_download = {received_SNR_download}, packet_download_loss_thresh[i] = {eval_env.packet_download_loss_thresh[tuple(i)]}")
@@ -415,7 +415,7 @@ def pf_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_los
                     
                 episode_wise_attempt_upload = episode_wise_attempt_upload + 1
                 
-                received_SNR_upload = getSNR(BS_location, user_locations[i], i)
+                received_SNR_upload = getSNR(BS_location, user_locations[i])
                 
                 if received_SNR_upload < eval_env.packet_upload_loss_thresh[i]:
                     # print(f"PACKET LOSS - received_SNR_upload = {received_SNR_upload}, packet_upload_loss_thresh[i] = {eval_env.packet_upload_loss_thresh[i]}")

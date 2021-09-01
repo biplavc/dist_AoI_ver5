@@ -106,8 +106,8 @@ sample_error_in_CSI = False ## has no meaning if CSI_as_state=False; if CSI_as_s
 time_in_state = False
 
 
-min_steps = 2000
-max_steps = 2001
+min_steps = 9
+max_steps = 10
 interval  = 1
 
 MAX_AGE = max_steps + 1 # 20
@@ -120,8 +120,8 @@ RB_total_DL = 2 # K R_d, update. has to be less than number of tx_rx_pairs
 
 #@param {type:"integer"} # number of times collect_data is called, log_interval and eval_interval are used here. number of times the collect_episodes(...) will run. each collect_episode(...) runs for collect_episodes_per_iteration episodes to fill the buffer. once one iteration is over, the train_env is run on it and then buffer is clear. This value doesn't add to the returns that is showed as the final performance.
 
-random_episodes = 100 # all schedulers except dqn runs this number of times
-log_interval_random = 20
+random_episodes = 1000 # all schedulers except dqn runs this number of times
+log_interval_random = 1000
 
 num_iterations = 1_00 # 1_000_000 # dqn runs this number of times
 log_interval = 10_000 # @param {type:"integer"} # how frequently to print out in console
@@ -421,7 +421,7 @@ class UAV_network(py_environment.PyEnvironment):   # network of UAVs not just a 
             print(f'self.n_users = {self.n_users}, self.n_UAVs = {self.n_UAVs}, self.act_coverage = {self.act_coverage}, self.update_loss_thresh = {self.packet_upload_loss_thresh}, self.sample_loss_thresh = {self.packet_download_loss_thresh}, self.UAV_list = {self.UAV_list}, self.user_list = {self.user_list}')
             # time.sleep(15)
 
-        # self.create_action_space() # @ remove_action
+        self.create_action_space() # @ remove_action
 
         # not doing in initialize_age() as initialize_age() is run every time net is reset so older values will be lost. start_network is run only once
         for i in self.user_list:
@@ -545,7 +545,7 @@ class UAV_network(py_environment.PyEnvironment):   # network of UAVs not just a 
         convert the single integer action to specific sampling and updating tasks
         '''
         # print(f'inside  map_actions, action={action}, type(action)={type(action)}')
-        # print(f'action={action},self.actions_space={self.actions_space}')
+        # print(f'action={action}, self.actions_space={self.actions_space}')
         actual_action = self.actions_space[action]
         if verbose:
             # print(f'action space is {self.actions_space}, length is {self.action_size}, array size is {len(self.actions_space)} selected action is {action} which maps to {actual_action}')

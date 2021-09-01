@@ -77,6 +77,7 @@ def do_scheduling(deployment, I, scheduler):
         deployment_options = ["MDS", "RP"]
         scheduler_options  = ["random", "greedy", "mad", "omad_greedy_UL", "omad_cumAoI_UL", "omad_links_UL" , "rr", "dqn", "pf"]
         assert(deployment in deployment_options and scheduler in scheduler_options)
+        # schedulers  = ["dqn" "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]
 
         random.seed(4) ## this seed ensures same location of users in every case, keep both seeds
         
@@ -524,7 +525,7 @@ if __name__ == '__main__':
 
     deployments = ["RP"] #, "RP"] #, "MDS"]
     
-    schedulers  = ["random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]  # "dqn" "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"
+    schedulers  = ["random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]  # "dqn", "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"
 
     # limit_memory = False ## enabling this makes the code not being able to find CUDA device
     
@@ -534,7 +535,7 @@ if __name__ == '__main__':
     packet_loss = bool
     periodic_generation = bool
     
-    experiment = 2 ## 1 or 5 ## biplav
+    experiment = 1 ## 1 or 5 ## biplav
 
     if experiment == 1:
         test_case           = True

@@ -256,7 +256,7 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
                 if verbose:
                     print(f"\ncurrent slot = {eval_env.current_step}, pair {i} age at the beginning is {eval_env.dest_age[tuple(i)]}")
                     
-                received_SNR_download = getSNR(BS_location, user_locations[i[1]], i[1])
+                received_SNR_download = getSNR(BS_location, user_locations[i[1]])
                 
                 if received_SNR_download < eval_env.packet_download_loss_thresh[tuple(i)]:
                     # print(f"PACKET LOSS - received_SNR_download = {received_SNR_download}, packet_download_loss_thresh[i] = {eval_env.packet_download_loss_thresh[tuple(i)]}")
@@ -397,7 +397,7 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
                     
                 episode_wise_attempt_upload = episode_wise_attempt_upload + 1
                 
-                received_SNR_upload = getSNR(BS_location, user_locations[i], i)
+                received_SNR_upload = getSNR(BS_location, user_locations[i])
                 
                 if received_SNR_upload < eval_env.packet_upload_loss_thresh[i]:
                     # print(f"PACKET LOSS - received_SNR_upload = {received_SNR_upload}, packet_upload_loss_thresh[i] = {eval_env.packet_upload_loss_thresh[i]}")

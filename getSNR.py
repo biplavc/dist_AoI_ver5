@@ -7,8 +7,8 @@ import math
 
 
 
-def getSNR(loc1, loc2, sd):
-    np.random.seed(sd)
+def getSNR(loc1, loc2):
+    np.random.seed(42)
     distance = math.sqrt((loc1[0]-loc2[0])**2 + (loc1[0]-loc2[0])**2)
     x = np.random.normal(loc=0, scale=math.sqrt(0.99), size=(1, 2)).view(np.complex128) ## estimated 
     y = np.random.normal(loc=0, scale=math.sqrt(0.01), size=(1, 2)).view(np.complex128) ## error 
