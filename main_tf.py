@@ -71,11 +71,11 @@ def do_scheduling(deployment, I, scheduler):
     STEPS = list(range(min_steps, max_steps, interval))
     
     for T in STEPS:
-        
+        print(f"\nsimulation will run for T={T} steps\n")
         global print_matrix
         
         deployment_options = ["MDS", "RP"]
-        scheduler_options  = ["random", "greedy", "mad", "omad_greedy_UL", "omad_cumAoI_UL", "omad_links_UL" , "rr", "dqn", "pf"]
+        scheduler_options  = ["random", "greedy", "mad", "omad_greedy_UL", "omad_cumAoI_UL", "omad_links_UL" , "rr", "dqn", "pf"] ## "random", "greedy", "mad", "omad_greedy_UL", "omad_cumAoI_UL", "omad_links_UL" , "rr", "dqn", "pf"
         assert(deployment in deployment_options and scheduler in scheduler_options)
         # schedulers  = ["dqn" "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]
 
@@ -179,13 +179,13 @@ def do_scheduling(deployment, I, scheduler):
             #                                     [1, 0, 0, 0, 0]])
             
             
-            adj_matrix              = np.array([[0, 1, 1], ## 3 UL 6 DL
-                                                [1, 0, 1],
-                                                [1, 1, 0]])
+            # adj_matrix              = np.array([[0, 1, 1], ## 3 UL 6 DL
+            #                                     [1, 0, 1],
+            #                                     [1, 1, 0]])
             
             
-            # adj_matrix              = np.array([[0, 1], ## 2 UL 2 DL
-            #                                     [1, 0]])
+            adj_matrix              = np.array([[0, 1], ## 2 UL 2 DL
+                                                [1, 0]])
             
             
             # adj_matrix              = np.array([[0, 1, 1, 0], ## 4 UL 8 DL
@@ -525,7 +525,8 @@ if __name__ == '__main__':
 
     deployments = ["RP"] #, "RP"] #, "MDS"]
     
-    schedulers  = ["random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]  # "dqn", "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"
+    schedulers  = ["mad"]  
+    # "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"
 
     # limit_memory = False ## enabling this makes the code not being able to find CUDA device
     
@@ -579,7 +580,7 @@ if __name__ == '__main__':
     
 
     if test_case:
-        users = [3] ##biplav
+        users = [2] ##biplav
     else:
         users = [8,10]
 

@@ -279,8 +279,11 @@ def mad_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_lo
                                 
                                 # record schedule only if (i) valid packet downloaded (ii) packet fully downloaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_DL_schedule[tuple(i)].append([ep, eval_env.current_step, eval_env.curr_DL_gen[tuple(i)]]) 
-   
+                                    modulation_index = [0,1,2,3] # simple index to get the index of modulation_index
+                                    modulation_order = random.choice(modulation_index)
+                                    delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                    mad_DL_schedule[tuple(i)].append([ep, eval_env.current_step + delay_from_throughput, eval_env.curr_DL_gen[tuple(i)]]) 
+
                             eval_env.comp_DL_gen[tuple(i)] = eval_env.curr_DL_gen[tuple(i)]
                             
                             
@@ -322,11 +325,15 @@ def mad_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_lo
                             
                                 # record schedule only if (i) valid packet sent (ii) packet fully downloaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_DL_schedule[tuple(i)].append([ep, eval_env.current_step, eval_env.curr_DL_gen[tuple(i)]]) 
+                                    modulation_index = [0,1,2,3] # simple index to get the index of modulation_index
+                                    modulation_order = random.choice(modulation_index)
+                                    delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                    
+                                    mad_DL_schedule[tuple(i)].append([ep, eval_env.current_step  + delay_from_throughput, eval_env.curr_DL_gen[tuple(i)]]) 
 
                             if verbose:
                                 print(f"pair {i} age at the end is {eval_env.dest_age[tuple(i)]}. old packet fully DL. new values-curr_DL_gen[{i}]={eval_env.curr_DL_gen[tuple(i)]}, comp_DL_gen[{i}]={eval_env.comp_DL_gen[tuple(i)]}, curr_UL_gen[{i[0]}]={eval_env.curr_UL_gen[i[0]]}, comp_UL_gen[{i[0]}]={eval_env.comp_UL_gen[i[0]]}, RB_pending_DL[{i}]={eval_env.RB_pending_DL[tuple(i)]},assigned_RB_DL = {assigned_RB_DL}, remaining_RB_DL={remaining_RB_DL}\n")
-                                
+
                         else: # eval_env.RB_pending_DL[tuple(i)] != 0: # means old packet wasn't fully downloaded in this slot
                             if eval_env.curr_DL_gen[tuple(i)] == -1: ## current packet started DL when BS had nothing 
                                 eval_env.dest_age[tuple(i)] = eval_env.current_step
@@ -416,8 +423,11 @@ def mad_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_lo
                                 
                                 # record schedule only if (i) valid packet upload (ii) packet fully uploaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_UL_schedule[i].append([ep, eval_env.current_step, eval_env.curr_UL_gen[i]]) 
-                            
+                                    modulation_index = [0,1,2,3] # simple index to get the index of modulation_index
+                                    modulation_order = random.choice(modulation_index)
+                                    delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                    
+                                    mad_UL_schedule[i].append([ep, eval_env.current_step + delay_from_throughput, eval_env.curr_UL_gen[i]])                             
                             # new packet done
                             
                             if verbose:
@@ -448,7 +458,11 @@ def mad_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_lo
                                 
                                 # record schedule only if (i) valid packet upload (ii) packet fully uploaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_UL_schedule[i].append([ep, eval_env.current_step, eval_env.curr_UL_gen[i]]) 
+                                    modulation_index = [0,1,2,3] # simple index to get the index of modulation_index
+                                    modulation_order = random.choice(modulation_index)
+                                    delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                    
+                                    mad_UL_schedule[i].append([ep, eval_env.current_step + delay_from_throughput, eval_env.curr_UL_gen[i]]) 
 
                             if verbose:
                                 print(f"user {i} age at the end is {eval_env.UAV_age[i]}. old packet fully UL-new values curr_UL_gen[{i}] = {eval_env.curr_UL_gen[i]}, comp_UL_gen[{i}] = {eval_env.comp_UL_gen[i]}, RB_pending_UL[{i}] = {eval_env.RB_pending_UL[i]}, assigned_RB_UL = {assigned_RB_UL}, remaining_RB_UL = {remaining_RB_UL}\n")
@@ -576,6 +590,8 @@ def mad_scheduling(I, drones_coverage, folder_name, deployment, packet_upload_lo
 
     pickle.dump(mad_UL_schedule, open(folder_name + "/" + deployment + "/" + "mad_UL_schedule_" + str(I) + "U.pickle", "wb"))    
     pickle.dump(mad_DL_schedule, open(folder_name + "/" + deployment + "/" + "mad_DL_schedule_" + str(I) + "U.pickle", "wb"))   
+    
+    print(f"mad_DL_schedule = {mad_DL_schedule}")
     
     print("\nMAD scheduling ", deployment, " placement, ", I, " users. MEAN of final_step_rewards = ", np.mean(final_step_rewards), ". MEAN of overall_ep_reward = ", np.mean(overall_ep_reward), " MIN and MAX of overall_ep_reward = ", np.min(overall_ep_reward),", ", np.max(overall_ep_reward),  " ... MEAN of overall_ep_peak_reward = ", np.mean(overall_ep_peak_reward), " MIN and MAX of overall_ep_peak_reward = ", np.min(overall_ep_peak_reward),", ", np.max(overall_ep_peak_reward), ". Similarly for final_step_UAV_rewards - MEAN = ",{np.mean(final_step_UAV_rewards)}, ", MIN and MAX of final_step_UAV_rewards = ", np.min(final_step_UAV_rewards),", ", np.max(final_step_UAV_rewards)," end with final state of ", eval_env._state, " with shape ", np.shape(eval_env._state), ", min PDR_upload = ", {np.min(PDR_upload)}, ", max PDR_upload = ", {np.max(PDR_upload)}, ", min PDR_download = ", {np.min(PDR_download)}, ", max PDR_upload = ", {np.max(PDR_download)}, ", max_total_packet_lost_upload = ", np.max(total_packet_lost_upload), ", min_total_packet_lost_upload = ", np.min(total_packet_lost_upload), ", max_total_packet_lost_download = ", np.max(total_packet_lost_download), ", min_total_packet_lost_download = ", np.min(total_packet_lost_download))
     
