@@ -170,13 +170,13 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
     unutilized_RB_UL = []
     unutilized_RB_DL = []
     
-    mad_UL_schedule = {} ## key:([slot 1st DL completed, gen time of the packet], [slot 2nd DL completed, gen time of the packet], [...], [...])
+    omad_UL_schedule = {} ## key:([slot 1st DL completed, gen time of the packet], [slot 2nd DL completed, gen time of the packet], [...], [...])
     for i in tx_users:
-        mad_UL_schedule[i] = [] ## list corresponding to each key
+        omad_UL_schedule[i] = [] ## list corresponding to each key
 
-    mad_DL_schedule = {} ## key:([slot 1st UL completed, gen time of the packet], [slot 2nd UL completed, gen time of the packet], [...], [...])
+    omad_DL_schedule = {} ## key:([slot 1st UL completed, gen time of the packet], [slot 2nd UL completed, gen time of the packet], [...], [...])
     for i in tx_rx_pairs:
-        mad_DL_schedule[tuple(i)] = [] ## list corresponding to each key
+        omad_DL_schedule[tuple(i)] = [] ## list corresponding to each key
 
     best_episodes_average = {}
     best_episodes_peak = {}
@@ -302,12 +302,13 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
                                 eval_env.dest_age[tuple(i)] = eval_env.current_step
 
                             else: ## current packet started DL after BS had a packet
-                                eval_env.dest_age[tuple(i)] = eval_env.current_step - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
-                                
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
                                 # record schedule only if (i) valid packet downloaded (ii) packet fully downloaded
-                                if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_DL_schedule[tuple(i)].append([ep, eval_env.current_step, eval_env.curr_DL_gen[tuple(i)]]) 
-   
+                                eval_env.dest_age[tuple(i)] = eval_env.current_step + delay_include*delay_from_throughput - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
+                                assert eval_env.dest_age[tuple(i)]>0
+                                if (random_episodes-ep)<100: ##means the last 100 episode                                    
+                                    omad_DL_schedule[tuple(i)].append([ep, eval_env.current_step + delay_from_throughput*delay_include, eval_env.curr_DL_gen[tuple(i)]]) 
                             eval_env.comp_DL_gen[tuple(i)] = eval_env.curr_DL_gen[tuple(i)]
                             
                             
@@ -343,17 +344,18 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
                             if eval_env.curr_DL_gen[tuple(i)] == -1: ## current packet started DL when BS had nothing 
                                 eval_env.dest_age[tuple(i)] = eval_env.current_step
                             else: ## current packet started DL after BS had a packet
-                                eval_env.dest_age[tuple(i)] = eval_env.current_step - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                eval_env.dest_age[tuple(i)] = eval_env.current_step + delay_from_throughput*delay_include - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
                                 eval_env.comp_DL_gen[tuple(i)] = eval_env.curr_DL_gen[tuple(i)]
                             # older packet done
                             
                                 # record schedule only if (i) valid packet sent (ii) packet fully downloaded
-                                if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_DL_schedule[tuple(i)].append([ep, eval_env.current_step, eval_env.curr_DL_gen[tuple(i)]]) 
+                                if (random_episodes-ep)<100: ##means the last 100 episode
+                                    omad_DL_schedule[tuple(i)].append([ep, eval_env.current_step  + delay_from_throughput*delay_include, eval_env.curr_DL_gen[tuple(i)]]) 
 
                             if verbose:
-                                print(f"pair {i} age at the end is {eval_env.dest_age[tuple(i)]}. old packet fully DL. new values-curr_DL_gen[{i}]={eval_env.curr_DL_gen[tuple(i)]}, comp_DL_gen[{i}]={eval_env.comp_DL_gen[tuple(i)]}, curr_UL_gen[{i[0]}]={eval_env.curr_UL_gen[i[0]]}, comp_UL_gen[{i[0]}]={eval_env.comp_UL_gen[i[0]]}, RB_pending_DL[{i}]={eval_env.RB_pending_DL[tuple(i)]},assigned_RB_DL = {assigned_RB_DL}, remaining_RB_DL={remaining_RB_DL}\n")
-                                
+                                print(f"pair {i} age at the end is {eval_env.dest_age[tuple(i)]}. old packet fully DL. new values-curr_DL_gen[{i}]={eval_env.curr_DL_gen[tuple(i)]}, comp_DL_gen[{i}]={eval_env.comp_DL_gen[tuple(i)]}, curr_UL_gen[{i[0]}]={eval_env.curr_UL_gen[i[0]]}, comp_UL_gen[{i[0]}]={eval_env.comp_UL_gen[i[0]]}, RB_pending_DL[{i}]={eval_env.RB_pending_DL[tuple(i)]},assigned_RB_DL = {assigned_RB_DL}, remaining_RB_DL={remaining_RB_DL}\n")                           
                         else: # eval_env.RB_pending_DL[tuple(i)] != 0: # means old packet wasn't fully downloaded in this slot
                             if eval_env.curr_DL_gen[tuple(i)] == -1: ## current packet started DL when BS had nothing 
                                 eval_env.dest_age[tuple(i)] = eval_env.current_step
@@ -438,14 +440,15 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
                             if eval_env.curr_UL_gen[i] == -1: ## current packet started UL when device had nothing 
                                 eval_env.UAV_age[i] = eval_env.current_step
                             else: ## current packet started UL after device had a packet
-                                eval_env.UAV_age[i] = eval_env.current_step - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                eval_env.UAV_age[i] = eval_env.current_step + delay_from_throughput*delay_include - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
                                 eval_env.comp_UL_gen[i] = eval_env.curr_UL_gen[i] # no need of multiple cases like DL
                                 
                                 # record schedule only if (i) valid packet upload (ii) packet fully uploaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_UL_schedule[i].append([ep, eval_env.current_step, eval_env.curr_UL_gen[i]]) 
-                            
-                            # new packet done
+                                    omad_UL_schedule[i].append([ep, eval_env.current_step + delay_from_throughput*delay_include, eval_env.curr_UL_gen[i]])
+                          # new packet done
                             
                             if verbose:
                                 print(f"user {i} age at the end is {eval_env.UAV_age[i]}. new packet fully UL in same slot-new values curr_UL_gen[{i}] = {eval_env.curr_UL_gen[i]}, comp_UL_gen[{i}] = {eval_env.comp_UL_gen[i]}, RB_pending_UL[{i}] = {eval_env.RB_pending_UL[i]}, assigned_RB_UL = {assigned_RB_UL}, remaining_RB_UL = {remaining_RB_UL}\n")
@@ -470,12 +473,14 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
                             if eval_env.curr_UL_gen[i] == -1: ## current packet started UL when device had nothing 
                                 eval_env.UAV_age[i] = eval_env.current_step
                             else: ## current packet started UL after device had a packet
-                                eval_env.UAV_age[i] = eval_env.current_step - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                eval_env.UAV_age[i] = eval_env.current_step + delay_from_throughput*delay_include - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
                                 eval_env.comp_UL_gen[i] = eval_env.curr_UL_gen[i] # no need of multiple cases like DL
                                 
                                 # record schedule only if (i) valid packet upload (ii) packet fully uploaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    mad_UL_schedule[i].append([ep, eval_env.current_step, eval_env.curr_UL_gen[i]]) 
+                                    omad_UL_schedule[i].append([ep, eval_env.current_step + delay_from_throughput*delay_include, eval_env.curr_UL_gen[i]]) 
 
                             if verbose:
                                 print(f"user {i} age at the end is {eval_env.UAV_age[i]}. old packet fully UL-new values curr_UL_gen[{i}] = {eval_env.curr_UL_gen[i]}, comp_UL_gen[{i}] = {eval_env.comp_UL_gen[i]}, RB_pending_UL[{i}] = {eval_env.RB_pending_UL[i]}, assigned_RB_UL = {assigned_RB_UL}, remaining_RB_UL = {remaining_RB_UL}\n")
@@ -599,10 +604,8 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
     
     pickle.dump(unutilized_RB_DL, open(folder_name + "/" + deployment + "/" + str(I) + "U_omad_greedy_unutilized_RB_DL.pickle", "wb"))
     pickle.dump(unutilized_RB_UL, open(folder_name + "/" + deployment + "/" + str(I) + "U_omad_greedy_unutilized_RB_UL.pickle", "wb"))
-    
-    pickle.dump(mad_UL_schedule, open(folder_name + "/" + deployment + "/" + "omad_greedy_UL_schedule_" + str(I) + "U.pickle", "wb"))    
-    pickle.dump(mad_DL_schedule, open(folder_name + "/" + deployment + "/" + "omad_greedy_DL_schedule_" + str(I) + "U.pickle", "wb"))  
-    
+    pickle.dump(omad_UL_schedule, open(folder_name + "/" + deployment + "/" + "omad_greedy_UL_schedule_" + str(I) + "U.pickle", "wb"))    
+    pickle.dump(omad_DL_schedule, open(folder_name + "/" + deployment + "/" + "omad_greedy_DL_schedule_" + str(I) + "U.pickle", "wb"))  
     print("\nomad_greedy_UL_scheduling scheduling ", deployment, " placement, ", I, " . MEAN of final_step_rewards = ", np.mean(final_step_rewards), ". MEAN of overall_ep_reward = ", np.mean(overall_ep_reward), " MIN and MAX of overall_ep_reward = ", np.min(overall_ep_reward),", ", np.max(overall_ep_reward),  " ... MEAN of overall_ep_peak_reward = ", np.mean(overall_ep_peak_reward), " MIN and MAX of overall_ep_peak_reward = ", np.min(overall_ep_peak_reward),", ", np.max(overall_ep_peak_reward), ". Similarly for final_step_UAV_rewards - MEAN = ",{np.mean(final_step_UAV_rewards)}, ", MIN and MAX of final_step_UAV_rewards = ", np.min(final_step_UAV_rewards),", ", np.max(final_step_UAV_rewards)," end with final state of ", eval_env._state, " with shape ", np.shape(eval_env._state), ", min PDR_upload = ", {np.min(PDR_upload)}, ", max PDR_upload = ", {np.max(PDR_upload)}, ", min PDR_download = ", {np.min(PDR_download)}, ", max PDR_upload = ", {np.max(PDR_download)}, ", max_total_packet_lost_upload = ", np.max(total_packet_lost_upload), ", min_total_packet_lost_upload = ", np.min(total_packet_lost_upload), ", max_total_packet_lost_download = ", np.max(total_packet_lost_download), ", min_total_packet_lost_download = ", np.min(total_packet_lost_download))
     
     print("\nomad_greedy_UL_scheduling ", deployment, " placement, ", I, " . MEAN of final_step_rewards = ", np.mean(final_step_rewards), ". MEAN of overall_ep_reward = ", np.mean(overall_ep_reward), " MIN and MAX of overall_ep_reward = ", np.min(overall_ep_reward),", ", np.max(overall_ep_reward),  " ... MEAN of overall_ep_peak_reward = ", np.mean(overall_ep_peak_reward), " MIN and MAX of overall_ep_peak_reward = ", np.min(overall_ep_peak_reward),", ", np.max(overall_ep_peak_reward), ". Similarly for final_step_UAV_rewards - MEAN = ",{np.mean(final_step_UAV_rewards)}, ", MIN and MAX of final_step_UAV_rewards = ", np.min(final_step_UAV_rewards),", ", np.max(final_step_UAV_rewards)," end with final state of ", eval_env._state, " with shape ", np.shape(eval_env._state), ", min PDR_upload = ", {np.min(PDR_upload)}, ", max PDR_upload = ", {np.max(PDR_upload)}, ", min PDR_download = ", {np.min(PDR_download)}, ", max PDR_upload = ", {np.max(PDR_download)}, ", max_total_packet_lost_upload = ", np.max(total_packet_lost_upload), ", min_total_packet_lost_upload = ", np.min(total_packet_lost_upload), ", max_total_packet_lost_download = ", np.max(total_packet_lost_download), ", min_total_packet_lost_download = ", np.min(total_packet_lost_download), file = open(folder_name + "/results.txt", "a"), flush = True)

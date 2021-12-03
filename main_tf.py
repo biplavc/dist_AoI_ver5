@@ -92,54 +92,54 @@ def do_scheduling(deployment, I, scheduler):
             
     #####################################       
 
-            # topology = "new_ring" ## options = "ring", "fully_connected", "new_ring" , "new_ring_1_connection"
+            topology = "fully_connected" ## options = "ring", "fully_connected", "new_ring" , "new_ring_1_connection"
             
-            # if topology == "fully_connected": ## each device connected to everyone else
-            #     adj_matrix = np.ones((I,I))
-            #     for i in range(I):
-            #         adj_matrix[i][i] = 0
+            if topology == "fully_connected": ## each device connected to everyone else
+                adj_matrix = np.ones((I,I))
+                for i in range(I):
+                    adj_matrix[i][i] = 0
                     
-            # if topology == "ring": ## each device connected to two of the nearest ones but the edge ones (1,14,15,28) are connected to two of their LHS and RHS respectively. older
-            #     J = I/2 ## devices per feeder, we have 2 feeders
-            #     adj_matrix = np.zeros((I,I))
-            #     for i in range(I):
+            if topology == "ring": ## each device connected to two of the nearest ones but the edge ones (1,14,15,28) are connected to two of their LHS and RHS respectively. older
+                J = I/2 ## devices per feeder, we have 2 feeders
+                adj_matrix = np.zeros((I,I))
+                for i in range(I):
                     
-            #         if i%J==0: ## first devices in the feeder, will connect to 2 devices on its right
-            #             adj_matrix[i][i+1] = 1
-            #             adj_matrix[i][i+2] = 1
+                    if i%J==0: ## first devices in the feeder, will connect to 2 devices on its right
+                        adj_matrix[i][i+1] = 1
+                        adj_matrix[i][i+2] = 1
                         
-            #         elif (i+1)%J==0: ## last devices in the feeder, will connect to 2 devices on its left
-            #             adj_matrix[i][i-1] = 1
-            #             adj_matrix[i][i-2] = 1
+                    elif (i+1)%J==0: ## last devices in the feeder, will connect to 2 devices on its left
+                        adj_matrix[i][i-1] = 1
+                        adj_matrix[i][i-2] = 1
                         
-            #         else:
-            #             adj_matrix[i][i-1] = 1
-            #             adj_matrix[i][(i+1)%I] = 1
+                    else:
+                        adj_matrix[i][i-1] = 1
+                        adj_matrix[i][(i+1)%I] = 1
                             
-            # if topology == "new_ring": ## each device connected to two of the nearest ones in groups of 14. newer
-            #     J = I/2 ## devices per feeder, we have 2 feeders
-            #     adj_matrix = np.zeros((I,I))
-            #     for i in range(I):
+            if topology == "new_ring": ## each device connected to two of the nearest ones in groups of 14. newer
+                J = I/2 ## devices per feeder, we have 2 feeders
+                adj_matrix = np.zeros((I,I))
+                for i in range(I):
                     
-            #         if i==0: ## 0, 14 first devices in the feeder, will connect to 2 devices on its right
-            #             adj_matrix[i][1] = 1
-            #             adj_matrix[i][13] = 1
+                    if i==0: ## 0, 14 first devices in the feeder, will connect to 2 devices on its right
+                        adj_matrix[i][1] = 1
+                        adj_matrix[i][13] = 1
                         
-            #         elif i==13: ## last devices in the feeder, will connect to 2 devices on its left
-            #             adj_matrix[i][12] = 1
-            #             adj_matrix[i][0] = 1
+                    elif i==13: ## last devices in the feeder, will connect to 2 devices on its left
+                        adj_matrix[i][12] = 1
+                        adj_matrix[i][0] = 1
                         
-            #         elif i==14: ## last devices in the feeder, will connect to 2 devices on its left
-            #             adj_matrix[i][15] = 1
-            #             adj_matrix[i][27] = 1
+                    elif i==14: ## last devices in the feeder, will connect to 2 devices on its left
+                        adj_matrix[i][15] = 1
+                        adj_matrix[i][27] = 1
                         
-            #         elif i==27: ## last devices in the feeder, will connect to 2 devices on its left
-            #             adj_matrix[i][26] = 1
-            #             adj_matrix[i][14] = 1
+                    elif i==27: ## last devices in the feeder, will connect to 2 devices on its left
+                        adj_matrix[i][26] = 1
+                        adj_matrix[i][14] = 1
                                             
-            #         else:
-            #             adj_matrix[i][i-1] = 1
-            #             adj_matrix[i][(i+1)%I] = 1
+                    else:
+                        adj_matrix[i][i-1] = 1
+                        adj_matrix[i][(i+1)%I] = 1
                         
             # if topology == "new_ring_1_connection": ## each device connected to two of the nearest ones in groups of 14. newer
             #     J = I/2 ## devices per feeder, we have 2 feeders
@@ -184,8 +184,8 @@ def do_scheduling(deployment, I, scheduler):
             #                                     [1, 1, 0]])
             
             
-            adj_matrix              = np.array([[0, 1], ## 2 UL 2 DL
-                                                [1, 0]])
+            # adj_matrix              = np.array([[0, 1], ## 2 UL 2 DL
+            #                                     [1, 0]])
             
             
             # adj_matrix              = np.array([[0, 1, 1, 0], ## 4 UL 8 DL
@@ -525,7 +525,7 @@ if __name__ == '__main__':
 
     deployments = ["RP"] #, "RP"] #, "MDS"]
     
-    schedulers  = ["mad"]  
+    schedulers  = ["random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]  
     # "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"
 
     # limit_memory = False ## enabling this makes the code not being able to find CUDA device
@@ -580,7 +580,7 @@ if __name__ == '__main__':
     
 
     if test_case:
-        users = [2] ##biplav
+        users = [14] ##biplav
     else:
         users = [8,10]
 

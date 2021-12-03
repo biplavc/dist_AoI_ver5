@@ -185,12 +185,13 @@ def random_scheduling(I, drones_coverage, folder_name, deployment, packet_upload
                                 eval_env.dest_age[tuple(i)] = eval_env.current_step
 
                             else: ## current packet started DL after BS had a packet
-                                eval_env.dest_age[tuple(i)] = eval_env.current_step - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
-
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
                                 # record schedule only if (i) valid packet downloaded (ii) packet fully downloaded
-                                if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    random_DL_schedule[tuple(i)].append([ep, eval_env.current_step, eval_env.curr_DL_gen[tuple(i)]]) 
-    
+                                eval_env.dest_age[tuple(i)] = eval_env.current_step + delay_include*delay_from_throughput - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
+                                assert eval_env.dest_age[tuple(i)]>0
+                                if (random_episodes-ep)<100: ##means the last 100 episode                                    
+                                    random_DL_schedule[tuple(i)].append([ep, eval_env.current_step + delay_from_throughput*delay_include, eval_env.curr_DL_gen[tuple(i)]]) 
                             eval_env.comp_DL_gen[tuple(i)] = eval_env.curr_DL_gen[tuple(i)]
                             
                             
@@ -226,13 +227,15 @@ def random_scheduling(I, drones_coverage, folder_name, deployment, packet_upload
                             if eval_env.curr_DL_gen[tuple(i)] == -1: ## current packet started DL when BS had nothing 
                                 eval_env.dest_age[tuple(i)] = eval_env.current_step
                             else: ## current packet started DL after BS had a packet
-                                eval_env.dest_age[tuple(i)] = eval_env.current_step - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                eval_env.dest_age[tuple(i)] = eval_env.current_step + delay_from_throughput*delay_include - eval_env.curr_DL_gen[tuple(i)] # age change after packet fully sent
                                 eval_env.comp_DL_gen[tuple(i)] = eval_env.curr_DL_gen[tuple(i)]
                             # older packet done
-
+                            
                                 # record schedule only if (i) valid packet sent (ii) packet fully downloaded
-                                if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    random_DL_schedule[tuple(i)].append([ep, eval_env.current_step, eval_env.curr_DL_gen[tuple(i)]]) 
+                                if (random_episodes-ep)<100: ##means the last 100 episode
+                                    random_DL_schedule[tuple(i)].append([ep, eval_env.current_step  + delay_from_throughput*delay_include, eval_env.curr_DL_gen[tuple(i)]]) 
 
                             if verbose:
                                 print(f"pair {i} age at the end is {eval_env.dest_age[tuple(i)]}. old packet fully DL. new values-curr_DL_gen[{i}]={eval_env.curr_DL_gen[tuple(i)]}, comp_DL_gen[{i}]={eval_env.comp_DL_gen[tuple(i)]}, curr_UL_gen[{i[0]}]={eval_env.curr_UL_gen[i[0]]}, comp_UL_gen[{i[0]}]={eval_env.comp_UL_gen[i[0]]}, RB_pending_DL[{i}]={eval_env.RB_pending_DL[tuple(i)]},assigned_RB_DL = {assigned_RB_DL}, remaining_RB_DL={remaining_RB_DL}\n")
@@ -322,13 +325,14 @@ def random_scheduling(I, drones_coverage, folder_name, deployment, packet_upload
                             if eval_env.curr_UL_gen[i] == -1: ## current packet started UL when device had nothing 
                                 eval_env.UAV_age[i] = eval_env.current_step
                             else: ## current packet started UL after device had a packet
-                                eval_env.UAV_age[i] = eval_env.current_step - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                eval_env.UAV_age[i] = eval_env.current_step + delay_from_throughput*delay_include - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
                                 eval_env.comp_UL_gen[i] = eval_env.curr_UL_gen[i] # no need of multiple cases like DL
-
+                                
                                 # record schedule only if (i) valid packet upload (ii) packet fully uploaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    random_UL_schedule[i].append([ep, eval_env.current_step, eval_env.curr_UL_gen[i]]) 
-                                 
+                                    random_UL_schedule[i].append([ep, eval_env.current_step + delay_from_throughput*delay_include, eval_env.curr_UL_gen[i]])
                             # new packet done
                             
                             if verbose:
@@ -354,12 +358,14 @@ def random_scheduling(I, drones_coverage, folder_name, deployment, packet_upload
                             if eval_env.curr_UL_gen[i] == -1: ## current packet started UL when device had nothing 
                                 eval_env.UAV_age[i] = eval_env.current_step
                             else: ## current packet started UL after device had a packet
-                                eval_env.UAV_age[i] = eval_env.current_step - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
+                                modulation_order = random.choice(modulation_index)
+                                delay_from_throughput = packet_size/throughputs[modulation_order]*10**(-3)
+                                eval_env.UAV_age[i] = eval_env.current_step + delay_from_throughput*delay_include - eval_env.curr_UL_gen[i] # age change after packet fully sent                        
                                 eval_env.comp_UL_gen[i] = eval_env.curr_UL_gen[i] # no need of multiple cases like DL
-
+                                
                                 # record schedule only if (i) valid packet upload (ii) packet fully uploaded
                                 if (random_episodes-ep)<100: ##means the last 100 episodes
-                                    random_UL_schedule[i].append([ep, eval_env.current_step, eval_env.curr_UL_gen[i]]) 
+                                    random_UL_schedule[i].append([ep, eval_env.current_step + delay_from_throughput*delay_include, eval_env.curr_UL_gen[i]]) 
 
                             if verbose:
                                 print(f"user {i} age at the end is {eval_env.UAV_age[i]}. old packet fully UL-new values curr_UL_gen[{i}] = {eval_env.curr_UL_gen[i]}, comp_UL_gen[{i}] = {eval_env.comp_UL_gen[i]}, RB_pending_UL[{i}] = {eval_env.RB_pending_UL[i]}, assigned_RB_UL = {assigned_RB_UL}, remaining_RB_UL = {remaining_RB_UL}\n")

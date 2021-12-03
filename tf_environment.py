@@ -106,22 +106,27 @@ sample_error_in_CSI = False ## has no meaning if CSI_as_state=False; if CSI_as_s
 time_in_state = False
 
 
-min_steps = 5
+min_steps = 2999
 max_steps = min_steps + 1
 interval  = 1
 
+delay_include = 0 # 0 for slot and 1 to include it
+
+modulation_index = [0,1,2,3] # simple index to get the index of modulation_index
 packet_size        = 64 # bits
 modulation_orders = [2,4,6,8]
 base_throughput = 1.07 # in Mbps
 throughputs = [base_throughput, 2*base_throughput, 3*base_throughput, 4*base_throughput]
+np.set_printoptions(precision=2) # https://stackoverflow.com/questions/12439753/set-global-output-precision-python/38447064
+
 
 MAX_AGE = max_steps + 1 # 20
 
 coverage_capacity = 3 # max users 1 UAV can cover, used in create_graph_1
 
 set_gamma = 1
-RB_total_UL = 1 # L R_u, sample. has to be less than number of tx_users
-RB_total_DL = 1 # K R_d, update. has to be less than number of tx_rx_pairs
+RB_total_UL = 10 # L R_u, sample. has to be less than number of tx_users
+RB_total_DL = 20 # K R_d, update. has to be less than number of tx_rx_pairs
 
 #@param {type:"integer"} # number of times collect_data is called, log_interval and eval_interval are used here. number of times the collect_episodes(...) will run. each collect_episode(...) runs for collect_episodes_per_iteration episodes to fill the buffer. once one iteration is over, the train_env is run on it and then buffer is clear. This value doesn't add to the returns that is showed as the final performance.
 
@@ -217,7 +222,9 @@ class UAV_network(py_environment.PyEnvironment):   # network of UAVs not just a 
         UAV_loc              : list, UAV deployment positions.
         cover                : list of list, list of list containing users covered by the drone in the index position.
         UAV_age              : dict, age at UAV, i.e. the BS.
+        UAV_age_new          : dict, age at UAV including the delay from throughput, i.e. the BS.
         dest_age             : dict, age at the destination nodes. indexed by a tx_rx pair.
+        dest_age_new         : dict, age at the destination nodes including the delay from throughput. indexed by a tx_rx pair.
         dest_age_prev        : dict, age at the destination nodes in the previous step. indexed by a tx_rx pair.
         state                : list, state of the system - contains all ages at BS and UAV.
         agent                : Object class, the DL agent that will be shared among all the UAVs.
@@ -303,6 +310,7 @@ class UAV_network(py_environment.PyEnvironment):   # network of UAVs not just a 
         self.preference     = {}
         self.current_step   = 1
         self.UAV_age        = {}
+        self.UAV_age_new    = {}
         self.dest_age       = {} ## previously BS age
         self.dest_age_prev  = {} ## previously BS_age_prev
         self.name           = name
