@@ -112,8 +112,8 @@ interval  = 1
 
 delay_include = 0 # 0 for slot and 1 to include it
 
-modulation_index = [0,1,2,3] # simple index to get the index of modulation_index
-packet_size        = 64 # bits
+modulation_index  = [0,1,2,3] # simple index to get the index of modulation_index
+packet_size       = 64 # bits
 modulation_orders = [2,4,6,8]
 base_throughput = 1.07 # in Mbps
 throughputs = [base_throughput, 2*base_throughput, 3*base_throughput, 4*base_throughput]
@@ -130,8 +130,8 @@ RB_total_DL = 20 # K R_d, update. has to be less than number of tx_rx_pairs
 
 #@param {type:"integer"} # number of times collect_data is called, log_interval and eval_interval are used here. number of times the collect_episodes(...) will run. each collect_episode(...) runs for collect_episodes_per_iteration episodes to fill the buffer. once one iteration is over, the train_env is run on it and then buffer is clear. This value doesn't add to the returns that is showed as the final performance.
 
-random_episodes = 100 # all schedulers except dqn runs this number of times
-log_interval_random = 1000
+random_episodes = 5 # all schedulers except dqn runs this number of times
+log_interval_random = 2
 
 num_iterations = 1_00 # 1_000_000 # dqn runs this number of times
 log_interval = 10_000 # @param {type:"integer"} # how frequently to print out in console
@@ -549,7 +549,6 @@ class UAV_network(py_environment.PyEnvironment):   # network of UAVs not just a 
             # time.sleep(10)
          # just before initializing age, this episode ending age to be saved   
         self.initialize_age()
-        
         return ts.restart(np.array([self._state], dtype=np.float32))
 
         

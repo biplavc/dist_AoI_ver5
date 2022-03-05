@@ -183,6 +183,7 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
      
     start_time = time.time()
     for ep in range(random_episodes): # how many times the random policy will be run, similar to episode
+        print(f"oMAD ep = {ep}", flush = True)
         if ep%log_interval_random ==0 and ep!=0:
             new_time = time.time()
             time_gap = round(new_time-start_time,2)
@@ -190,7 +191,7 @@ def omad_greedy_UL_scheduling(I, drones_coverage, folder_name, deployment, packe
             remaining_seconds = (random_episodes - ep)*rate
             x = datetime.datetime.now()
             finish_time = x + datetime.timedelta(seconds=remaining_seconds)
-            print(f"oMAD greedy UL ep = {ep} took {time_gap} seconds from start, rate = {round((1/rate),2)} eps/sec, finish_time = {finish_time} ", flush = True)
+            print(f"{time_gap} seconds from start, rate = {round((1/rate),2)} eps/sec, finish_time = {finish_time} ", flush = True)
         ep_reward = 0
         ep_peak_reward = 0
 

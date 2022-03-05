@@ -528,7 +528,7 @@ if __name__ == '__main__':
     schedulers  = ["random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"]  
     # "random", "greedy", "mad", "omad_greedy_UL", "rr", "pf"
 
-    # limit_memory = False ## enabling this makes the code not being able to find CUDA device
+    limit_memory = True ## enabling this makes the code not being able to find CUDA device
     
 #############################
 
